@@ -12,7 +12,12 @@ class Contact extends React.Component {
     name: "",
     email: "",
     notes: "",
-    submitButtonEnabled: true 
+  }
+
+  encode = (data) => {
+    return Object.keys(data)
+      .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}` )
+      .join("&");
   }
 
   changeHandler = e => {
@@ -35,7 +40,7 @@ class Contact extends React.Component {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
         },
-        body: encode({
+        body: this.encode({
           "form-name": "contact",
           name: this.state.cmsnamenetgats,
           email: this.state.cmsemailnetgats,
@@ -63,7 +68,6 @@ class Contact extends React.Component {
           name: "",
           email: "",
           notes: "",
-          submitButtonEnabled: false 
       });
     }
   }
@@ -181,7 +185,7 @@ class Contact extends React.Component {
             Don’t fill this out if you're human: 
             <input name="bot-field" />
           </label>
-          <button type="submit" disabled={!this.state.submitButtonEnabled}>Submit</button>
+          <button type="submit">Submit</button>
         </form>
       </Layout>
     )
